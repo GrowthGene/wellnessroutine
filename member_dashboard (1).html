@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>웰니스 루틴 — 내 포인트 확인</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0f0b;
+    --surface: #131a13;
+    --surface2: #1a241a;
+    --border: #243024;
+    --accent: #a8e063;
+    --accent2: #63e0c8;
+    --accent3: #f0c060;
+    --text: #eef4ee;
+    --muted: #5a7a5a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(168,224,99,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(168,224,99,0.025) 1px, transparent 1px);
+    background-size: 36px 36px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 48px 20px 100px;
+  }
+
+  /* HEADER */
+  .header { text-align: center; margin-bottom: 44px; animation: fadeDown 0.5s ease both; }
+  .logo-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(168,224,99,0.08); border: 1px solid rgba(168,224,99,0.2);
+    border-radius: 100px; padding: 5px 14px;
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 18px; font-family: 'DM Mono', monospace;
+  }
+  .header h1 {
+    font-size: clamp(26px, 7vw, 40px); font-weight: 900;
+    letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 10px;
+  }
+  .header h1 em { font-style: normal; color: var(--accent); }
+  .header p { color: var(--muted); font-size: 13px; font-weight: 300; line-height: 1.7; }
+
+  /* SEARCH */
+  .search-section { margin-bottom: 28px; animation: fadeDown 0.5s 0.05s ease both; }
+  .search-wrap { display: flex; gap: 10px; }
+  .search-input {
+    flex: 1; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 16px 20px; font-size: 15px;
+    font-family: 'Noto Sans KR', sans-serif; color: var(--text); outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(168,224,99,0.08); }
+  .search-input::placeholder { color: var(--muted); }
+  .search-btn {
+    background: var(--accent); color: #0b0f0b; border: none; border-radius: 14px;
+    padding: 16px 24px; font-size: 14px; font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif; cursor: pointer;
+    white-space: nowrap; transition: transform 0.15s, opacity 0.15s;
+  }
+  .search-btn:hover { opacity: 0.88; transform: scale(1.02); }
+  .search-btn:active { transform: scale(0.97); }
+
+  /* MESSAGE */
+  .message {
+    text-align: center; padding: 40px 20px; color: var(--muted);
+    font-size: 14px; display: none; animation: fadeUp 0.4s ease both;
+    white-space: pre-line; line-height: 1.8;
+  }
+  .message.visible { display: block; }
+  .message .emoji { font-size: 32px; display: block; margin-bottom: 12px; }
+
+  /* RESULT CARD */
+  .result-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; overflow: hidden;
+    display: none; animation: fadeUp 0.45s ease both;
+  }
+  .result-card.visible { display: block; }
+
+  .card-top {
+    padding: 28px 28px 22px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  }
+  .member-name { font-size: 24px; font-weight: 900; letter-spacing: -0.02em; }
+  .level-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 7px 15px; border-radius: 100px; font-size: 13px; font-weight: 700;
+    background: rgba(168,224,99,0.1); color: var(--accent);
+    border: 1px solid rgba(168,224,99,0.22); white-space: nowrap; flex-shrink: 0;
+  }
+
+  /* STATS */
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--border); }
+  .stat-item { padding: 20px 22px; border-right: 1px solid var(--border); }
+  .stat-item:last-child { border-right: none; }
+  .stat-label { font-size: 9px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; font-family: 'DM Mono', monospace; margin-bottom: 7px; }
+  .stat-value { font-size: 26px; font-weight: 900; font-family: 'DM Mono', monospace; letter-spacing: -0.02em; line-height: 1; }
+  .stat-value.pts { color: var(--accent); }
+  .stat-value.rank { color: var(--accent3); }
+  .stat-value.days { color: var(--accent2); }
+  .stat-sub { font-size: 10px; color: var(--muted); margin-top: 4px; font-family: 'DM Mono', monospace; }
+
+  /* PROGRESS */
+  .progress-section { padding: 22px 28px; border-bottom: 1px solid var(--border); }
+  .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .progress-title { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+  .progress-numbers { font-size: 11px; font-family: 'DM Mono', monospace; }
+  .progress-numbers .cur { color: var(--accent); font-weight: 700; }
+  .progress-numbers .total { color: var(--muted); }
+  .progress-track { height: 7px; background: var(--surface2); border-radius: 100px; overflow: hidden; margin-bottom: 8px; }
+  .progress-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.8s cubic-bezier(0.25,1,0.5,1); }
+  .progress-next { font-size: 10px; color: var(--muted); font-family: 'DM Mono', monospace; }
+  .progress-next span { color: var(--accent3); }
+
+  /* DETAIL */
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); }
+  .detail-item { padding: 16px 22px; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; }
+  .detail-item:nth-child(2n) { border-right: none; }
+  .detail-item:nth-child(n+3) { border-top: 1px solid var(--border); }
+  .detail-label { font-size: 9px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; font-family: 'DM Mono', monospace; }
+  .detail-value { font-size: 18px; font-weight: 700; font-family: 'DM Mono', monospace; color: var(--text); }
+
+  /* LEVEL TABLE */
+  .level-section { padding: 22px 28px; }
+  .level-section-title { font-size: 10px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; font-family: 'DM Mono', monospace; margin-bottom: 14px; }
+  .level-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .level-table th { text-align: left; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-family: 'DM Mono', monospace; padding: 0 0 10px; font-weight: 400; border-bottom: 1px solid var(--border); }
+  .level-table td { padding: 9px 0; border-bottom: 1px solid rgba(36,48,36,0.5); color: var(--muted); font-family: 'DM Mono', monospace; font-size: 11px; }
+  .level-table tr:last-child td { border-bottom: none; }
+  .level-table tr.current-level td { color: var(--text); font-weight: 700; }
+  .level-table tr.current-level td:first-child { color: var(--accent); }
+  .lv-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-right: 6px; vertical-align: middle; box-shadow: 0 0 6px var(--accent); }
+
+  /* RANKINGS */
+  .rankings-section { margin-top: 32px; animation: fadeDown 0.5s 0.1s ease both; }
+  .section-title { font-size: 10px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; font-family: 'DM Mono', monospace; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .rank-list { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .rank-item { display: flex; align-items: center; padding: 14px 20px; gap: 14px; border-bottom: 1px solid var(--border); transition: background 0.15s; }
+  .rank-item:last-child { border-bottom: none; }
+  .rank-item:hover { background: var(--surface2); }
+  .rank-num { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 700; width: 28px; text-align: center; color: var(--muted); flex-shrink: 0; }
+  .rank-num.top1 { color: #ffd700; }
+  .rank-num.top2 { color: #c0c0c0; }
+  .rank-num.top3 { color: #cd7f32; }
+  .rank-name { flex: 1; font-size: 14px; font-weight: 500; }
+  .rank-pts { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 700; color: var(--accent); }
+  .rank-level { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; }
+
+  /* LOADING */
+  .loading-bar {
+    height: 2px; background: var(--border); border-radius: 100px;
+    margin-bottom: 28px; overflow: hidden; display: none;
+  }
+  .loading-bar.visible { display: block; }
+  .loading-fill {
+    height: 100%; width: 0%; border-radius: 100px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    animation: loading 1.5s ease infinite;
+  }
+  @keyframes loading {
+    0% { width: 0%; margin-left: 0; }
+    50% { width: 60%; }
+    100% { width: 0%; margin-left: 100%; }
+  }
+
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .stat-item:nth-child(2) { border-right: none; }
+    .stat-item:nth-child(3) { border-top: 1px solid var(--border); grid-column: span 2; }
+    .card-top { flex-direction: column; }
+    .level-badge { align-self: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="logo-pill">🌿 wellness routine</div>
+    <h1>내 포인트<br><em>확인하기</em></h1>
+    <p>닉네임을 입력하면 포인트, 레벨, 순위를 확인할 수 있어요</p>
+  </div>
+
+  <div class="loading-bar" id="loadingBar"><div class="loading-fill"></div></div>
+
+  <div class="search-section">
+    <div class="search-wrap">
+      <input class="search-input" id="searchInput" type="text"
+        placeholder="닉네임 입력 (예: 곽장군)" autocomplete="off" />
+      <button class="search-btn" onclick="searchMember()">조회</button>
+    </div>
+  </div>
+
+  <div class="message visible" id="message">
+    <span class="emoji" id="msgEmoji">🌿</span>
+    <span id="msgText">닉네임을 입력하고 조회해 주세요</span>
+  </div>
+
+  <div class="result-card" id="resultCard">
+    <div class="card-top">
+      <div class="member-name" id="rName">—</div>
+      <div class="level-badge" id="rLevel">—</div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-label">총 포인트</div>
+        <div class="stat-value pts" id="rTotalPts">—</div>
+        <div class="stat-sub">accumulated</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">순위</div>
+        <div class="stat-value rank" id="rRank">—</div>
+        <div class="stat-sub">ranking</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">총 인증일</div>
+        <div class="stat-value days" id="rTotalDays">—</div>
+        <div class="stat-sub">days</div>
+      </div>
+    </div>
+    <div class="progress-section">
+      <div class="progress-header">
+        <div class="progress-title">다음 레벨까지</div>
+        <div class="progress-numbers">
+          <span class="cur" id="rCurPts">0</span>
+          <span class="total"> / <span id="rNextPts">0</span>P</span>
+        </div>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="rProgressFill" style="width:0%"></div>
+      </div>
+      <div class="progress-next" id="rProgressNext">—</div>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-item">
+        <div class="detail-label">이번달 인증일</div>
+        <div class="detail-value" id="rMonthDays">—</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">이번달 포인트</div>
+        <div class="detail-value" id="rMonthPts">—</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">금주 인증일</div>
+        <div class="detail-value" id="rWeekDays">—</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">금주 포인트</div>
+        <div class="detail-value" id="rWeekPts">—</div>
+      </div>
+    </div>
+    <div class="level-section">
+      <div class="level-section-title">레벨 로드맵</div>
+      <table class="level-table">
+        <thead><tr><th>레벨</th><th>이름</th><th>기준 포인트</th></tr></thead>
+        <tbody id="levelTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="rankings-section" id="rankingsSection" style="display:none">
+    <div class="section-title">전체 순위</div>
+    <div class="rank-list" id="rankList"></div>
+  </div>
+
+</div>
+
+<script>
+// ================================================================
+// ★ CSV URL을 아래에 붙여넣으세요 (웹에 게시 → CSV 링크)
+// ================================================================
+const SHEET_CSV_URL = '여기에_CSV_URL_붙여넣기';
+// ================================================================
+
+const LEVELS = [
+  { lv:1,  name:'🌱 루틴새싹',      min:0,     max:299 },
+  { lv:2,  name:'🏃 액티브무버',     min:300,   max:799 },
+  { lv:3,  name:'⭐ 프리즘러너',     min:800,   max:1799 },
+  { lv:4,  name:'💎 바디트랜스포머', min:1800,  max:3499 },
+  { lv:5,  name:'🏆 웰니스마스터',   min:3500,  max:5999 },
+  { lv:6,  name:'🎨 라이프디자이너', min:6000,  max:8499 },
+  { lv:7,  name:'🎖️ 루틴앰버서더',  min:8500,  max:11499 },
+  { lv:8,  name:'🔥 체인지메이커',   min:11500, max:14499 },
+  { lv:9,  name:'🛡️ 웰니스가디언',  min:14500, max:17999 },
+  { lv:10, name:'👑 레전드',         min:18000, max:Infinity },
+];
+
+let members = [];
+
+async function loadData() {
+  if (!SHEET_CSV_URL || SHEET_CSV_URL.includes('여기에')) return;
+  document.getElementById('loadingBar').classList.add('visible');
+  try {
+    const res = await fetch(SHEET_CSV_URL);
+    if (!res.ok) throw new Error('fetch failed');
+    const text = await res.text();
+    members = parseCSV(text);
+    renderRankings();
+  } catch(e) {
+    showMessage('⚠️', 'CSV 데이터를 불러오지 못했어요.\n잠시 후 다시 시도해 주세요.');
+  } finally {
+    document.getElementById('loadingBar').classList.remove('visible');
+  }
+}
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const result = [];
+  for (let i = 0; i < lines.length; i++) {
+    const cols = splitCSVLine(lines[i]);
+    const name = (cols[0] || '').replace(/"/g,'').trim();
+    if (!name || name === '닉네임' || name.includes('대시보드') || name.includes('멤버')) continue;
+    result.push({
+      name,
+      totalDays: parseNum(cols[1]),
+      totalPts:  parseNum(cols[2]),
+      monthDays: parseNum(cols[3]),
+      monthPts:  parseNum(cols[4]),
+      weekDays:  parseNum(cols[5]),
+      weekPts:   parseNum(cols[6]),
+      level:     (cols[7] || '').replace(/"/g,'').trim(),
+      rank:      parseNum(cols[8]),
+    });
+  }
+  return result.filter(m => m.name);
+}
+
+function splitCSVLine(line) {
+  const res = []; let cur = '', inQ = false;
+  for (const c of line) {
+    if (c === '"') { inQ = !inQ; continue; }
+    if (c === ',' && !inQ) { res.push(cur); cur = ''; continue; }
+    cur += c;
+  }
+  res.push(cur);
+  return res;
+}
+
+function parseNum(v) {
+  const n = parseFloat((v||'').toString().replace(/[^0-9.\-]/g,''));
+  return isNaN(n) ? 0 : n;
+}
+
+function getLevelInfo(pts) {
+  for (let i = LEVELS.length - 1; i >= 0; i--) {
+    if (pts >= LEVELS[i].min) return LEVELS[i];
+  }
+  return LEVELS[0];
+}
+
+function searchMember() {
+  const q = document.getElementById('searchInput').value.trim();
+  if (!q) return;
+  if (members.length === 0) {
+    showMessage('⏳', '데이터를 불러오는 중이에요.\n잠시 후 다시 시도해 주세요.');
+    loadData();
+    return;
+  }
+  const found = members.find(m =>
+    m.name === q || m.name.toLowerCase().includes(q.toLowerCase())
+  );
+  if (!found) {
+    showMessage('😢', `"${q}" 닉네임을 찾을 수 없어요.\n정확한 닉네임을 입력해 주세요.`);
+    return;
+  }
+  renderResult(found);
+}
+
+function renderResult(m) {
+  document.getElementById('message').classList.remove('visible');
+  const card = document.getElementById('resultCard');
+  card.classList.remove('visible');
+  void card.offsetWidth;
+  card.classList.add('visible');
+
+  document.getElementById('rName').textContent = m.name;
+  const lvInfo = getLevelInfo(m.totalPts);
+  document.getElementById('rLevel').textContent = m.level || `Lv.${lvInfo.lv} ${lvInfo.name}`;
+  document.getElementById('rTotalPts').textContent = m.totalPts.toLocaleString() + 'P';
+  document.getElementById('rRank').textContent = m.rank ? m.rank + '위' : '—';
+  document.getElementById('rTotalDays').textContent = m.totalDays + '일';
+
+  document.getElementById('rCurPts').textContent = m.totalPts.toLocaleString();
+  const nextLv = LEVELS.find(l => l.min > m.totalPts);
+  if (nextLv) {
+    const pct = Math.min(100, ((m.totalPts - lvInfo.min) / (nextLv.min - lvInfo.min)) * 100);
+    document.getElementById('rNextPts').textContent = nextLv.min.toLocaleString();
+    document.getElementById('rProgressFill').style.width = pct.toFixed(1) + '%';
+    const need = nextLv.min - m.totalPts;
+    document.getElementById('rProgressNext').innerHTML =
+      `<span>${nextLv.name}</span>까지 <span>${need.toLocaleString()}P</span> 남았어요`;
+  } else {
+    document.getElementById('rNextPts').textContent = '18,000+';
+    document.getElementById('rProgressFill').style.width = '100%';
+    document.getElementById('rProgressNext').textContent = '👑 최고 레벨 달성!';
+  }
+
+  document.getElementById('rMonthDays').textContent = m.monthDays + '일';
+  document.getElementById('rMonthPts').textContent = m.monthPts + 'P';
+  document.getElementById('rWeekDays').textContent = m.weekDays + '일';
+  document.getElementById('rWeekPts').textContent = m.weekPts + 'P';
+
+  const tbody = document.getElementById('levelTableBody');
+  tbody.innerHTML = LEVELS.map(l => {
+    const isCur = m.totalPts >= l.min && (l.lv === 10 || m.totalPts < LEVELS[l.lv].min);
+    return `<tr class="${isCur ? 'current-level' : ''}">
+      <td>${isCur ? '<span class="lv-dot"></span>' : ''}Lv.${l.lv}</td>
+      <td>${l.name}</td>
+      <td>${l.min.toLocaleString()}${l.max === Infinity ? 'P+' : ' ~ ' + l.max.toLocaleString() + 'P'}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderRankings() {
+  if (!members.length) return;
+  const sorted = [...members].sort((a,b) => b.totalPts - a.totalPts).slice(0, 20);
+  document.getElementById('rankingsSection').style.display = 'block';
+  document.getElementById('rankList').innerHTML = sorted.map((m, i) => {
+    const cls = i===0?'top1':i===1?'top2':i===2?'top3':'';
+    const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;
+    return `<div class="rank-item">
+      <div class="rank-num ${cls}">${medal}</div>
+      <div class="rank-name">${m.name}</div>
+      <div class="rank-level">${m.level||''}</div>
+      <div class="rank-pts">${m.totalPts.toLocaleString()}P</div>
+    </div>`;
+  }).join('');
+}
+
+function showMessage(emoji, text) {
+  document.getElementById('resultCard').classList.remove('visible');
+  document.getElementById('msgEmoji').textContent = emoji;
+  document.getElementById('msgText').textContent = text;
+  document.getElementById('message').classList.add('visible');
+}
+
+document.getElementById('searchInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') searchMember();
+});
+
+window.addEventListener('DOMContentLoaded', loadData);
+</script>
+</body>
+</html>
