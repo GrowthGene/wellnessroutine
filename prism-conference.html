@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRISM iO Science Conference 2025 뉴스레터</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #06080f;
+    --surface: #0d1120;
+    --surface2: #131828;
+    --border: #1e2640;
+    --accent-blue: #4e9fff;
+    --accent-purple: #9b6fff;
+    --accent-gold: #f5c842;
+    --accent-teal: #3ee8c8;
+    --accent-rose: #ff6b9d;
+    --text: #e8edf8;
+    --muted: #5a6890;
+    --prism1: #ff6b6b;
+    --prism2: #ffa94d;
+    --prism3: #f5c842;
+    --prism4: #69db7c;
+    --prism5: #4dabf7;
+    --prism6: #9775fa;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* PRISM gradient utility */
+  .prism-text {
+    background: linear-gradient(90deg, var(--prism5), var(--accent-purple), var(--accent-rose));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .gold-text { color: var(--accent-gold); }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(78,159,255,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(155,111,255,0.1) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 30% at 20% 70%, rgba(62,232,200,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(78,159,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(78,159,255,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 760px; }
+
+  .event-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(78,159,255,0.1);
+    border: 1px solid rgba(78,159,255,0.25);
+    border-radius: 100px;
+    padding: 7px 18px;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent-blue); font-family: 'DM Mono', monospace;
+    margin-bottom: 28px;
+  }
+  .event-badge .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent-blue);
+    box-shadow: 0 0 8px var(--accent-blue);
+    animation: pulse 2s ease infinite;
+  }
+  @keyframes pulse { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:0.5; transform:scale(1.4); } }
+
+  .hero-logo {
+    font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--muted); font-family: 'DM Mono', monospace; margin-bottom: 14px;
+  }
+  .hero-title {
+    font-size: clamp(38px, 9vw, 72px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 20px;
+  }
+  .hero-subtitle {
+    font-size: clamp(14px, 2.5vw, 18px);
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+  .hero-meta {
+    display: flex; align-items: center; justify-content: center;
+    gap: 24px; flex-wrap: wrap;
+    font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace;
+  }
+  .hero-meta-item { display: flex; align-items: center; gap: 7px; }
+  .hero-meta-item svg { opacity: 0.6; }
+
+  /* prism light beam decoration */
+  .prism-beam {
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 2px; height: 220px;
+    background: linear-gradient(to bottom, rgba(78,159,255,0.6), transparent);
+  }
+  .prism-beam::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(78,159,255,0.3), transparent);
+  }
+
+  /* ─── AGENDA ─── */
+  .section {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 80px 24px;
+  }
+  .section-label {
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); font-family: 'DM Mono', monospace;
+    display: flex; align-items: center; gap: 12px; margin-bottom: 32px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .agenda-grid { display: flex; flex-direction: column; gap: 2px; }
+  .agenda-item {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 0;
+    background: var(--surface);
+    transition: background 0.2s;
+  }
+  .agenda-item:first-child { border-radius: 14px 14px 0 0; }
+  .agenda-item:last-child { border-radius: 0 0 14px 14px; }
+  .agenda-item + .agenda-item { border-top: none; }
+  .agenda-item:hover { background: var(--surface2); }
+  .agenda-time {
+    padding: 18px 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px; color: var(--muted);
+    border-right: 1px solid var(--border);
+    display: flex; align-items: center;
+  }
+  .agenda-body { padding: 18px 24px; }
+  .agenda-topic { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .agenda-speaker { font-size: 12px; color: var(--muted); }
+  .agenda-speaker strong { color: var(--accent-blue); }
+  .break-item .agenda-time, .break-item .agenda-topic { color: var(--muted); }
+
+  /* ─── DIVIDER ─── */
+  .prism-divider {
+    height: 2px;
+    background: linear-gradient(90deg,
+      var(--prism1), var(--prism2), var(--prism3),
+      var(--prism4), var(--prism5), var(--prism6));
+    margin: 0;
+    border: none;
+  }
+
+  /* ─── SPEAKER SECTION ─── */
+  .speaker-hero {
+    position: relative;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .speaker-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 50%; height: 100%;
+    background: radial-gradient(ellipse at right top, rgba(155,111,255,0.12), transparent 70%);
+    pointer-events: none;
+  }
+  .speaker-inner {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 72px 24px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 60px;
+    align-items: start;
+    position: relative; z-index: 1;
+  }
+  .speaker-tag {
+    display: inline-block;
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent-purple); font-family: 'DM Mono', monospace;
+    border: 1px solid rgba(155,111,255,0.3);
+    padding: 4px 12px; border-radius: 100px;
+    margin-bottom: 18px;
+  }
+  .speaker-name {
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 900; letter-spacing: -0.02em;
+    line-height: 1.2; margin-bottom: 8px;
+  }
+  .speaker-title { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+  .speaker-lead {
+    font-size: 16px; font-weight: 500;
+    line-height: 1.8; margin-bottom: 24px;
+    color: var(--text);
+  }
+  .speaker-body { font-size: 14px; color: #8a9cc8; line-height: 1.9; }
+
+  .speaker-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    position: sticky; top: 24px;
+  }
+  .speaker-photo-placeholder {
+    width: 100%; aspect-ratio: 1;
+    background: linear-gradient(135deg, var(--surface), var(--border));
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 8px;
+    margin-bottom: 20px;
+    border: 1px dashed var(--border);
+    color: var(--muted); font-size: 12px; text-align: center;
+    font-family: 'DM Mono', monospace;
+  }
+  .speaker-card-name { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+  .speaker-card-role { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* ─── KEY FINDINGS ─── */
+  .findings-section {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 64px 24px;
+  }
+  .findings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .finding-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .finding-card:hover { border-color: rgba(78,159,255,0.3); transform: translateY(-2px); }
+  .finding-icon {
+    font-size: 28px; margin-bottom: 14px;
+    display: block;
+  }
+  .finding-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .finding-body { font-size: 13px; color: #8a9cc8; line-height: 1.8; }
+
+  /* ─── STAT HIGHLIGHT ─── */
+  .stat-highlight {
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(78,159,255,0.05) 100%);
+    border: 1px solid rgba(78,159,255,0.2);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    margin: 32px 0;
+  }
+  .stat-big {
+    font-size: 64px; font-weight: 900;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-desc { font-size: 14px; color: var(--muted); }
+
+  /* ─── VALIDATION STEPS ─── */
+  .steps-list { display: flex; flex-direction: column; gap: 20px; margin-top: 32px; }
+  .step-item {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .step-num {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: rgba(78,159,255,0.1);
+    border: 1px solid rgba(78,159,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 700;
+    font-family: 'DM Mono', monospace;
+    color: var(--accent-blue);
+    flex-shrink: 0;
+  }
+  .step-body {}
+  .step-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .step-text { font-size: 14px; color: #8a9cc8; line-height: 1.8; }
+
+  /* ─── QUOTE ─── */
+  .quote-block {
+    border-left: 3px solid;
+    border-image: linear-gradient(to bottom, var(--accent-blue), var(--accent-purple)) 1;
+    padding: 20px 28px;
+    margin: 32px 0;
+    background: rgba(78,159,255,0.04);
+    border-radius: 0 12px 12px 0;
+  }
+  .quote-text { font-size: 16px; font-weight: 500; line-height: 1.8; margin-bottom: 10px; }
+  .quote-attr { font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; }
+
+  /* ─── RESEARCH SECTION ─── */
+  .research-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .research-inner {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 72px 24px;
+  }
+  .research-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 48px;
+  }
+  .institute-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(245,200,66,0.08);
+    border: 1px solid rgba(245,200,66,0.2);
+    border-radius: 100px;
+    padding: 7px 18px;
+    font-size: 11px; letter-spacing: 0.12em;
+    color: var(--accent-gold); font-family: 'DM Mono', monospace;
+    white-space: nowrap;
+    height: fit-content;
+  }
+
+  /* ─── RESULTS GRID ─── */
+  .results-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .result-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+  .result-card:hover { border-color: rgba(99,225,180,0.3); }
+  .result-card-label {
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); font-family: 'DM Mono', monospace; margin-bottom: 10px;
+  }
+  .result-card-value {
+    font-size: 26px; font-weight: 900;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: -0.03em;
+    color: var(--accent-teal);
+    margin-bottom: 6px;
+  }
+  .result-card-desc { font-size: 13px; color: #8a9cc8; line-height: 1.7; }
+
+  /* ─── LIFESTYLE FACTORS ─── */
+  .factors-section { max-width: 840px; margin: 0 auto; padding: 64px 24px; }
+  .factors-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .factor-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .factor-indicator {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .factor-indicator.up { background: var(--accent-teal); box-shadow: 0 0 8px var(--accent-teal); }
+  .factor-indicator.down { background: var(--accent-rose); box-shadow: 0 0 8px var(--accent-rose); }
+  .factor-label { font-size: 14px; font-weight: 500; }
+  .factor-arrow {
+    margin-left: auto;
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+  }
+  .factor-arrow.up { color: var(--accent-teal); }
+  .factor-arrow.down { color: var(--accent-rose); }
+
+  /* ─── BIO AGE ─── */
+  .bioage-highlight {
+    background: linear-gradient(135deg, rgba(155,111,255,0.08), rgba(78,159,255,0.05));
+    border: 1px solid rgba(155,111,255,0.2);
+    border-radius: 20px;
+    padding: 44px;
+    text-align: center;
+    margin: 32px 0;
+  }
+  .bioage-num {
+    font-size: 80px; font-weight: 900;
+    font-family: 'DM Mono', monospace;
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1; margin-bottom: 4px;
+  }
+  .bioage-unit { font-size: 18px; color: var(--muted); margin-bottom: 16px; }
+  .bioage-desc { font-size: 15px; color: #8a9cc8; max-width: 400px; margin: 0 auto; line-height: 1.8; }
+
+  /* ─── CLINICAL TRIAL ─── */
+  .clinical-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .clinical-inner {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 72px 24px;
+  }
+  .trial-info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 32px 0;
+  }
+  .trial-info-item {
+    padding: 20px;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+  .trial-info-item:last-child { border-right: none; }
+  .trial-info-num {
+    font-size: 28px; font-weight: 900;
+    font-family: 'DM Mono', monospace;
+    color: var(--accent-blue);
+    margin-bottom: 4px;
+  }
+  .trial-info-label { font-size: 11px; color: var(--muted); }
+
+  /* ─── OUTCOME LIST ─── */
+  .outcome-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+  .outcome-list li {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 14px; color: #8a9cc8;
+    padding: 14px 18px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .outcome-list li::before {
+    content: '';
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent-teal); flex-shrink: 0;
+  }
+  .outcome-list li strong { color: var(--text); }
+
+  /* ─── PHOTO PLACEHOLDER ─── */
+  .photo-placeholder {
+    width: 100%;
+    aspect-ratio: 16/7;
+    background: var(--surface2);
+    border: 1px dashed var(--border);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 10px;
+    color: var(--muted);
+    font-size: 13px; text-align: center;
+    font-family: 'DM Mono', monospace;
+    margin: 24px 0;
+  }
+  .photo-placeholder svg { opacity: 0.3; }
+
+  /* ─── PRODUCT SECTION ─── */
+  .product-section {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 72px 24px;
+  }
+  .product-hero-card {
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(245,200,66,0.05) 100%);
+    border: 1px solid rgba(245,200,66,0.2);
+    border-radius: 24px;
+    padding: 48px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .product-hero-card::after {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,200,66,0.08), transparent 70%);
+    pointer-events: none;
+  }
+  .product-badge {
+    display: inline-block;
+    background: rgba(245,200,66,0.12);
+    border: 1px solid rgba(245,200,66,0.25);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent-gold); font-family: 'DM Mono', monospace;
+    margin-bottom: 18px;
+  }
+  .product-name {
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 900; letter-spacing: -0.03em;
+    line-height: 1.1; margin-bottom: 12px;
+  }
+  .product-tagline { font-size: 16px; color: var(--muted); margin-bottom: 32px; font-weight: 300; }
+  .product-launch {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--accent-gold);
+    color: #0c0a00;
+    border-radius: 12px;
+    padding: 14px 24px;
+    font-size: 15px; font-weight: 700;
+  }
+
+  .product-specs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .spec-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    text-align: center;
+  }
+  .spec-num {
+    font-size: 36px; font-weight: 900;
+    font-family: 'DM Mono', monospace;
+    color: var(--accent-gold);
+    margin-bottom: 4px; line-height: 1;
+  }
+  .spec-unit { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+  .spec-label { font-size: 12px; color: var(--muted); }
+
+  .upgrade-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .upgrade-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .upgrade-icon { font-size: 20px; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+  .upgrade-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .upgrade-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 48px 24px;
+    text-align: center;
+  }
+  .footer-logo { font-size: 14px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); font-family: 'DM Mono', monospace; margin-bottom: 12px; }
+  .footer-copy { font-size: 12px; color: var(--muted); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 680px) {
+    .speaker-inner { grid-template-columns: 1fr; }
+    .speaker-card { display: none; }
+    .research-header { grid-template-columns: 1fr; }
+    .results-row { grid-template-columns: 1fr; }
+    .factors-grid { grid-template-columns: 1fr; }
+    .trial-info-grid { grid-template-columns: 1fr 1fr; }
+    .trial-info-item:nth-child(2) { border-right: none; }
+    .trial-info-item:nth-child(3), .trial-info-item:nth-child(4) { border-top: 1px solid var(--border); }
+    .product-specs { grid-template-columns: 1fr; }
+    .upgrade-grid { grid-template-columns: 1fr; }
+    .stat-big { font-size: 44px; }
+    .bioage-num { font-size: 56px; }
+    .findings-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="event-badge">
+      <span class="dot"></span>
+      Science Conference · 2025
+    </div>
+    <div class="hero-logo">Nu Skin · Pharmanex</div>
+    <h1 class="hero-title">
+      <span class="prism-text">PRISM iO</span><br>
+      Science Conference
+    </h1>
+    <p class="hero-subtitle">
+      피부 카로티노이드 측정 기술의 과학적 검증부터<br>
+      연세대·상하이교통대 임상 연구 결과까지
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        2025년 행사
+      </div>
+      <div class="hero-meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        13:00 — 17:15
+      </div>
+      <div class="hero-meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        4 Speakers
+      </div>
+    </div>
+  </div>
+  <div class="prism-beam"></div>
+</section>
+
+<hr class="prism-divider">
+
+<!-- ═══════════════════════════════════════════
+     PHOTO — CONFERENCE OVERVIEW
+═══════════════════════════════════════════ -->
+<div style="max-width:840px; margin:0 auto; padding: 48px 24px 0;">
+  <div class="photo-placeholder">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+      <circle cx="8.5" cy="8.5" r="1.5"/>
+      <polyline points="21 15 16 10 5 21"/>
+    </svg>
+    현장 사진 추가 예정
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     AGENDA
+═══════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-label">행사 구성 · Program</div>
+  <div class="agenda-grid">
+    <div class="agenda-item">
+      <div class="agenda-time">13:00 — 14:00</div>
+      <div class="agenda-body">
+        <div class="agenda-topic">등록 및 입장</div>
+      </div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">14:00 — 14:05</div>
+      <div class="agenda-body">
+        <div class="agenda-topic">오프닝</div>
+      </div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">14:05 — 15:05</div>
+      <div class="agenda-body">
+        <div class="agenda-topic">PRISM iO 스탠퍼드 연구 결과 & 알고리즘 업데이트</div>
+        <div class="agenda-speaker">발표: NSE <strong>Dr. Helen Knaggs</strong></div>
+      </div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">15:05 — 15:35</div>
+      <div class="agenda-body">
+        <div class="agenda-topic">PRISM iO 연세대 연구 결과</div>
+        <div class="agenda-speaker">발표: <strong>IC Korea 조정희 연구원</strong></div>
+      </div>
+    </div>
+    <div class="agenda-item break-item">
+      <div class="agenda-time">15:35 — 15:50</div>
+      <div class="agenda-body">
+        <div class="agenda-topic" style="color:var(--muted)">휴식</div>
+      </div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">15:50 — 16:50</div>
+      <div class="agenda-body">
+        <div class="agenda-topic">PRISM 점수와 라이프스타일 — 치료 연관성에 관한 연구</div>
+        <div class="agenda-speaker">발표: 상하이교통대학교 <strong>Prof. Maiqin Cai</strong></div>
+      </div>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time">16:50 — 17:10</div>
+      <div class="agenda-body">
+        <div class="agenda-topic">라이프팩 옵티멀 활용 안내</div>
+        <div class="agenda-speaker">발표: <strong>NSK 정원영 Pro</strong></div>
+      </div>
+    </div>
+    <div class="agenda-item break-item">
+      <div class="agenda-time">17:10 — 17:15</div>
+      <div class="agenda-body">
+        <div class="agenda-topic" style="color:var(--muted)">클로징</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="prism-divider">
+
+<!-- ═══════════════════════════════════════════
+     SPEAKER 1 — DR. HELEN KNAGGS
+═══════════════════════════════════════════ -->
+<section class="speaker-hero">
+  <div class="speaker-inner">
+    <div>
+      <span class="speaker-tag">Session 01 · PRISM iO 개발 &amp; 검증</span>
+      <h2 class="speaker-name">PRISM iO는<br>어떻게 탄생했는가</h2>
+      <p class="speaker-title">Dr. Helen Knaggs · NSE (Nu Skin Enterprises)</p>
+
+      <p class="speaker-lead">
+        뉴스킨은 20년이 넘는 피부 카로티노이드 측정 데이터를 바탕으로,
+        손가락 하나로 체내 항산화 슈퍼히어로를 측정하는 PRISM iO를 완성했습니다.
+      </p>
+      <p class="speaker-body">
+        노화는 단 하나의 행동으로 해결되지 않습니다. 중요한 것은 균형입니다.
+        뉴스킨은 독자적인 기술과 방대한 데이터 축적을 바탕으로 새로운 플랫폼을 구축했으며,
+        카로티노이드가 눈 건강, 뇌 기능, 신체 기능 전반 및 건강한 노화에 중요한 역할을 한다는
+        사실을 과학적으로 규명했습니다.
+      </p>
+
+      <div class="quote-block" style="margin-top:28px;">
+        <p class="quote-text">"카로티노이드는 우리 몸이 직접 만들 수 없습니다. 오직 과일과 채소를 통해서만 섭취할 수 있어요. 그리고 이들은 우리 몸을 노화로부터 지키는 슈퍼히어로입니다."</p>
+        <div class="quote-attr">— Dr. Helen Knaggs, NSE</div>
+      </div>
+    </div>
+
+    <div class="speaker-card">
+      <div class="speaker-photo-placeholder">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        현장 사진<br>추가 예정
+      </div>
+      <div class="speaker-card-name">Dr. Helen Knaggs</div>
+      <div class="speaker-card-role">Nu Skin Enterprises<br>수석 과학 연구원</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRISM iO 작동 원리 -->
+<div class="findings-section">
+  <div class="section-label">PRISM iO 핵심 기술</div>
+
+  <div class="findings-grid">
+    <div class="finding-card">
+      <span class="finding-icon">💡</span>
+      <div class="finding-title">라만 분광학 기반</div>
+      <div class="finding-body">기존 S3 스캐너에서 사용한 라만 분광학 기술에서 한 단계 더 나아가, 빛을 활용한 새로운 피부 측정 방식을 연구 개발했습니다.</div>
+    </div>
+    <div class="finding-card">
+      <span class="finding-icon">🤖</span>
+      <div class="finding-title">AI · 머신러닝 알고리즘</div>
+      <div class="finding-body">빅데이터와 인공지능, 머신러닝 알고리즘을 결합하여 빛으로 측정한 수많은 데이터를 정밀하게 분석합니다.</div>
+    </div>
+    <div class="finding-card">
+      <span class="finding-icon">👆</span>
+      <div class="finding-title">손가락 측정</div>
+      <div class="finding-body">기존 손바닥 측정에서 손가락 측정으로 전환. 손바닥 측정값과의 상관계수 R²=0.93으로 매우 높은 일치도를 확인했습니다.</div>
+    </div>
+    <div class="finding-card">
+      <span class="finding-icon">🩸</span>
+      <div class="finding-title">혈중 카로티노이드 반영</div>
+      <div class="finding-body">손가락 PRISM 점수는 실제 혈액 속 카로티노이드 수준과 매우 강한 상관관계를 보여, 전신 항산화 상태를 반영합니다.</div>
+    </div>
+  </div>
+
+  <div class="stat-highlight" style="margin-top:32px;">
+    <div class="stat-big prism-text">R² 0.93</div>
+    <div class="stat-desc">손가락 측정값과 손바닥 측정값의 상관계수 — 기존 S3 스캐너와 동등한 성능 입증</div>
+  </div>
+
+  <div class="section-label" style="margin-top:48px;">검증 프로세스 · 3-Step Validation</div>
+  <div class="steps-list">
+    <div class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <div class="step-title">손가락 측정 적합성 검증</div>
+        <p class="step-text">손바닥 측정값 vs 손가락 측정값 상관분석. R²=0.93으로 손가락이 카로티노이드 측정에 매우 적합한 부위임을 입증.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <div class="step-title">혈중 카로티노이드 상관관계 확인</div>
+        <p class="step-text">PRISM iO 점수와 실제 혈액 내 순환 카로티노이드 수준의 비교 분석. 매우 강한 상관관계 확인.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <div class="step-title">최종 제품 검증 (성인 100명, 2026년 발표)</div>
+        <p class="step-text">최종 양산 제품으로 성인 100명 대상 PRISM 점수와 혈중 카로티노이드 비교. 기존 S3 스캐너와 동등한 성능 최종 입증.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bio Age Research -->
+<div style="max-width:840px; margin:0 auto; padding:0 24px 72px;">
+  <div class="section-label">스탠퍼드 연구 결과 · Biological Age</div>
+
+  <div class="bioage-highlight">
+    <div class="bioage-num">3–5</div>
+    <div class="bioage-unit">년 더 젊은 생물학적 나이</div>
+    <p class="bioage-desc">PRISM 점수가 높은 사람들은 생물학적 나이가 실제 나이보다 평균 3~5년 더 젊은 것으로 나타났습니다.</p>
+  </div>
+
+  <p style="font-size:14px; color:#8a9cc8; line-height:1.9;">
+    스탠퍼드 연구에서 PRISM 고점수 그룹은 염증 수치가 낮고, 산화 손상 방어 능력이 높으며,
+    노폐물 제거 시스템이 더 효율적으로 작동했습니다. 피부, 심장, 뇌 등 다양한 신체 시스템에서도
+    더 젊은 상태를 보였습니다. 중국 교통대학교 연구에서는 실제 나이가 비슷한 두 여성 중
+    PRISM 점수가 40점 높은 57세 여성이 56세 여성보다 훨씬 젊어 보이는 결과가 시각적으로 확인되었습니다.
+  </p>
+</div>
+
+<hr class="prism-divider">
+
+<!-- ═══════════════════════════════════════════
+     SESSION 2 — YONSEI / IC KOREA CLINICAL TRIAL
+═══════════════════════════════════════════ -->
+<section class="clinical-section">
+  <div class="clinical-inner">
+    <div class="section-label">Session 02 · 연세대학교 임상 연구</div>
+
+    <div style="display:grid; grid-template-columns:1fr auto; gap:24px; align-items:start; margin-bottom:32px;">
+      <div>
+        <h2 style="font-size:clamp(22px,4vw,34px); font-weight:900; letter-spacing:-0.02em; line-height:1.2; margin-bottom:10px;">
+          라이프팩 옵티멀<br><span class="gold-text">8주 인체 적용 시험</span>
+        </h2>
+        <p style="font-size:14px; color:var(--muted);">IC Korea × 연세대학교 심리학과 공동 연구 | 발표: IC Korea 조정희 연구원</p>
+      </div>
+      <div class="institute-badge">연세대학교 협업</div>
+    </div>
+
+    <p style="font-size:15px; color:#8a9cc8; line-height:1.9; margin-bottom:32px;">
+      IC Korea(현 SGS 그룹)와 연세대학교 심리학과 김한조 교수 연구팀이 협업하여
+      라이프팩 옵티멀의 인체 건강 효능을 과학적으로 평가했습니다.
+      생명윤리법, 개인정보보호법, 식약처 고시 가이드라인, Helsinki 선언문 및 GCP 가이드라인을
+      준수하여 진행된 무작위 이중맹검 인체 적용 시험입니다.
+    </p>
+
+    <div class="trial-info-grid">
+      <div class="trial-info-item">
+        <div class="trial-info-num">80명</div>
+        <div class="trial-info-label">최종 참여자</div>
+      </div>
+      <div class="trial-info-item">
+        <div class="trial-info-num">8주</div>
+        <div class="trial-info-label">섭취 기간</div>
+      </div>
+      <div class="trial-info-item">
+        <div class="trial-info-num">2그룹</div>
+        <div class="trial-info-label">시험군 vs 대조군</div>
+      </div>
+      <div class="trial-info-item">
+        <div class="trial-info-num">3종</div>
+        <div class="trial-info-label">측정 방법</div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:40px;">평가 항목</div>
+    <ul class="outcome-list">
+      <li><strong>심리 설문 평가 (7개 항목)</strong> — 연세대 심리학과 김한조 교수 주관: 주관적 건강 상태, 면역 상태, 건강에 대한 느낌, 피로도, 피부 인식, 식습관, 얼굴 매력</li>
+      <li><strong>피부색 측정</strong> — 스펙트로 포토미터로 뺨 부위 밝기(L*), 붉은기(a*), 노란기(b*) 측정 (0주, 4주, 8주)</li>
+      <li><strong>PRISM iO 카로티노이드 측정</strong> — 손가락 부위 카로티노이드 레벨 변화 추적</li>
+    </ul>
+
+    <!-- 사진 플레이스홀더 -->
+    <div class="photo-placeholder" style="margin-top:28px;">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+        <circle cx="8.5" cy="8.5" r="1.5"/>
+        <polyline points="21 15 16 10 5 21"/>
+      </svg>
+      임상 연구 현장 사진 추가 예정
+    </div>
+
+    <div class="section-label" style="margin-top:40px;">주요 연구 결과</div>
+    <div class="results-row">
+      <div class="result-card">
+        <div class="result-card-label">건강 상태 & 변화</div>
+        <div class="result-card-value">유의 증가</div>
+        <div class="result-card-desc">8주 후 주관적 건강 상태 및 1년 전 대비 건강 변화 점수가 시험군에서 통계적으로 유의하게 개선되었습니다.</div>
+      </div>
+      <div class="result-card">
+        <div class="result-card-label">활력 & 에너지</div>
+        <div class="result-card-value">유의 증가</div>
+        <div class="result-card-desc">기운·에너지·피로도 설문을 종합 분석한 결과, 8주 후 활력 지수가 시험군에서 유의하게 향상되었습니다.</div>
+      </div>
+      <div class="result-card">
+        <div class="result-card-label">피부 윤기 & 매끄러움</div>
+        <div class="result-card-value">4·8주 개선</div>
+        <div class="result-card-desc">피부 윤기와 매끄러움에 대한 자가 인식이 4주 및 8주 시점 모두에서 유의미하게 개선되었습니다.</div>
+      </div>
+      <div class="result-card">
+        <div class="result-card-label">피부 밝기 (기기 측정)</div>
+        <div class="result-card-value">4주 개선</div>
+        <div class="result-card-desc">스펙트로 포토미터로 측정한 뺨 부위 피부 밝기(L*)가 제품 복용 4주 후부터 유의하게 높아졌습니다.</div>
+      </div>
+      <div class="result-card">
+        <div class="result-card-label">피부 붉은기 완화</div>
+        <div class="result-card-value">4주 완화</div>
+        <div class="result-card-desc">피부 붉은기(a*) 수치가 4주 후부터 유의하게 감소 — 홍조 완화 및 항산화 효과와 연관됩니다.</div>
+      </div>
+      <div class="result-card">
+        <div class="result-card-label">카로티노이드 수치 (PRISM iO)</div>
+        <div class="result-card-value">4·8주 증가</div>
+        <div class="result-card-desc">체내 카로티노이드 함량이 4주, 8주 후 모두 유의하게 증가. 항산화 역량 향상을 직접 확인했습니다.</div>
+      </div>
+    </div>
+
+    <div class="quote-block" style="margin-top:36px;">
+      <p class="quote-text">"PRISM iO 측정이 심리 설문 결과, 피부색 밝기·붉은기 완화와 서로 상관관계가 있음을 확인했습니다. 이번 연구는 카로티노이드 증가가 실제로 체감할 수 있는 건강 변화로 이어진다는 것을 보여줍니다."</p>
+      <div class="quote-attr">— IC Korea 조정희 연구원</div>
+    </div>
+  </div>
+</section>
+
+<hr class="prism-divider">
+
+<!-- ═══════════════════════════════════════════
+     SESSION 3 — SHANGHAI JIAO TONG UNIVERSITY
+═══════════════════════════════════════════ -->
+<section class="research-section">
+  <div class="research-inner">
+    <div class="research-header">
+      <div>
+        <div class="section-label">Session 03 · 상하이교통대학교 대규모 연구</div>
+        <h2 style="font-size:clamp(22px,4vw,34px); font-weight:900; letter-spacing:-0.02em; line-height:1.2; margin-bottom:10px;">
+          PRISM 점수와<br><span class="prism-text">라이프스타일의 관계</span>
+        </h2>
+        <p style="font-size:14px; color:var(--muted);">상하이교통대학교 Prof. Maiqin Cai · 600명 대규모 횡단면 관찰 연구</p>
+      </div>
+      <div class="institute-badge" style="color:var(--accent-blue); border-color:rgba(78,159,255,0.2); background:rgba(78,159,255,0.08);">상하이교통대학교</div>
+    </div>
+
+    <p style="font-size:15px; color:#8a9cc8; line-height:1.9; margin-bottom:36px;">
+      600명이 참여한 대규모 횡단면 연구에서 PRISM 점수는 식습관, 수면, 신체 활동, 자외선 노출,
+      BMI, 체지방률, 피부 상태, 면역 건강, 장 건강, 간 건강 등 다양한 요인과
+      유의미한 상관관계를 보였습니다.
+    </p>
+
+    <div class="section-label">PRISM 점수에 영향을 주는 생활습관 요인</div>
+    <div class="factors-grid">
+      <div class="factor-item">
+        <span class="factor-indicator up"></span>
+        <span class="factor-label">통곡물·과일·채소·콩류 섭취</span>
+        <span class="factor-arrow up">↑ 상승</span>
+      </div>
+      <div class="factor-item">
+        <span class="factor-indicator up"></span>
+        <span class="factor-label">규칙적인 운동</span>
+        <span class="factor-arrow up">↑ 상승</span>
+      </div>
+      <div class="factor-item">
+        <span class="factor-indicator up"></span>
+        <span class="factor-label">양질의 수면 (자정 이전 취침)</span>
+        <span class="factor-arrow up">↑ 상승</span>
+      </div>
+      <div class="factor-item">
+        <span class="factor-indicator up"></span>
+        <span class="factor-label">적정 BMI · 체지방 관리</span>
+        <span class="factor-arrow up">↑ 상승</span>
+      </div>
+      <div class="factor-item">
+        <span class="factor-indicator down"></span>
+        <span class="factor-label">당·튀김·알코올·적색육 섭취</span>
+        <span class="factor-arrow down">↓ 하락</span>
+      </div>
+      <div class="factor-item">
+        <span class="factor-indicator down"></span>
+        <span class="factor-label">자정 이후 늦은 취침 습관</span>
+        <span class="factor-arrow down">↓ 하락</span>
+      </div>
+      <div class="factor-item">
+        <span class="factor-indicator down"></span>
+        <span class="factor-label">과도한 자외선 노출</span>
+        <span class="factor-arrow down">↓ 하락</span>
+      </div>
+      <div class="factor-item">
+        <span class="factor-indicator down"></span>
+        <span class="factor-label">운동 부족·비활동적 생활</span>
+        <span class="factor-arrow down">↓ 하락</span>
+      </div>
+    </div>
+
+    <!-- 사진 플레이스홀더 -->
+    <div class="photo-placeholder" style="margin-top:36px;">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+        <circle cx="8.5" cy="8.5" r="1.5"/>
+        <polyline points="21 15 16 10 5 21"/>
+      </svg>
+      연구 발표 현장 사진 추가 예정
+    </div>
+
+    <div style="margin-top:36px; background:var(--bg); border:1px solid var(--border); border-radius:16px; padding:32px;">
+      <div style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); font-family:'DM Mono',monospace; margin-bottom:20px;">피부 건강과 PRISM 점수</div>
+      <p style="font-size:14px; color:#8a9cc8; line-height:1.9;">
+        PRISM 점수 <strong style="color:var(--accent-teal)">4,000 이상</strong> 그룹에서 피부의 매끄러움, 수분감이 더 좋고 주름이 적은 것으로 나타났습니다.
+        또한 감기·독감에 자주 걸린다고 응답한 그룹은 PRISM 점수가 낮았고,
+        면역이 강하다고 응답한 그룹은 점수가 높았습니다. 장 기능 및 간 건강이 양호한 참여자도
+        더 높은 PRISM 점수를 보였습니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="prism-divider">
+
+<!-- ═══════════════════════════════════════════
+     PRODUCT — LIFEPACK OPTIMAL
+═══════════════════════════════════════════ -->
+<section class="product-section">
+  <div class="section-label">Session 04 · 제품 소개</div>
+
+  <div class="product-hero-card">
+    <div class="product-badge">New Launch · 2026.06.16</div>
+    <h2 class="product-name">
+      LifePak<sup style="font-size:0.5em; vertical-align:super;">®</sup>
+      <span class="gold-text">Optimal</span>
+    </h2>
+    <p class="product-tagline">과학적 완성도는 유지하고, 섭취 편의성은 두 배로</p>
+    <div class="product-launch">
+      출시일: 2026년 6월 16일 오전 10시
+    </div>
+  </div>
+
+  <div class="product-specs">
+    <div class="spec-card">
+      <div class="spec-num">4</div>
+      <div class="spec-unit">알 / 1일</div>
+      <div class="spec-label">기존 8알 → 4알로 압축</div>
+    </div>
+    <div class="spec-card">
+      <div class="spec-num">33</div>
+      <div class="spec-unit">가지 영양소</div>
+      <div class="spec-label">22 필수 + 11 식물 영양소</div>
+    </div>
+    <div class="spec-card">
+      <div class="spec-num">15</div>
+      <div class="spec-unit">가지 기능성</div>
+      <div class="spec-label">식약처 인정 기능성</div>
+    </div>
+  </div>
+
+  <!-- 사진 플레이스홀더 -->
+  <div class="photo-placeholder">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+      <circle cx="8.5" cy="8.5" r="1.5"/>
+      <polyline points="21 15 16 10 5 21"/>
+    </svg>
+    제품 사진 추가 예정
+  </div>
+
+  <div class="section-label">주요 업그레이드 포인트</div>
+  <div class="upgrade-grid">
+    <div class="upgrade-item">
+      <span class="upgrade-icon">🌿</span>
+      <div>
+        <div class="upgrade-title">식물 영양소 5종 → 11종</div>
+        <div class="upgrade-desc">포도종자(프랑스), 올리브나무잎(프랑스), 아티초크(스페인) 등 프리미엄 원료 소싱 확대</div>
+      </div>
+    </div>
+    <div class="upgrade-item">
+      <span class="upgrade-icon">⚡</span>
+      <div>
+        <div class="upgrade-title">비타민 D 3배 · 셀레늄 3.7배 증량</div>
+        <div class="upgrade-desc">한국인에게 부족한 영양소를 집중 강화. 비타민 B군 8종 전부 포함.</div>
+      </div>
+    </div>
+    <div class="upgrade-item">
+      <span class="upgrade-icon">🔬</span>
+      <div>
+        <div class="upgrade-title">활성형 엽산 (이탈리아 소싱)</div>
+        <div class="upgrade-desc">동아시아인에게 흔한 엽산 대사 효율 저하를 고려, 누구나 잘 활용할 수 있는 활성형 채택</div>
+      </div>
+    </div>
+    <div class="upgrade-item">
+      <span class="upgrade-icon">🦴</span>
+      <div>
+        <div class="upgrade-title">칼슘 + 비타민 K2 최적 배합</div>
+        <div class="upgrade-desc">칼슘만 많이 넣는 것이 아니라, K2와의 균형을 고려해 실제 뼈에 칼슘이 잘 쓰이도록 설계</div>
+      </div>
+    </div>
+    <div class="upgrade-item">
+      <span class="upgrade-icon">🌍</span>
+      <div>
+        <div class="upgrade-title">국가별 최적 원료 소싱</div>
+        <div class="upgrade-desc">영국·독일·스위스·미국·한국·이탈리아·프랑스·스페인 등 각 원료에 최적화된 국가에서 엄선</div>
+      </div>
+    </div>
+    <div class="upgrade-item">
+      <span class="upgrade-icon">✅</span>
+      <div>
+        <div class="upgrade-title">15가지 식약처 인정 기능성</div>
+        <div class="upgrade-desc">뼈·갑상선·항산화·눈·피부·에너지·혈액·면역·신진대사 등 종합 건강 관리</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quote-block" style="margin-top:40px; border-left-color:var(--accent-gold);">
+    <p class="quote-text">"라이프팩 옵티멀은 섭취 편의성은 높였지만, 과학적 설계의 완성도는 포기하지 않은 업그레이드 비타민입니다."</p>
+    <div class="quote-attr">— NSK 정원영 Pro</div>
+  </div>
+</section>
+
+<hr class="prism-divider">
+
+<!-- ═══════════════════════════════════════════
+     CLOSING MESSAGE
+═══════════════════════════════════════════ -->
+<div style="max-width:840px; margin:0 auto; padding:72px 24px; text-align:center;">
+  <div style="font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); font-family:'DM Mono',monospace; margin-bottom:24px;">Closing · 마무리 메시지</div>
+  <h2 style="font-size:clamp(22px,4vw,36px); font-weight:900; letter-spacing:-0.02em; line-height:1.3; margin-bottom:24px;">
+    인간의 잠재력은 무한합니다.<br>
+    <span class="prism-text">과학이 그 길을 밝힙니다.</span>
+  </h2>
+  <p style="font-size:15px; color:#8a9cc8; line-height:1.9; max-width:540px; margin:0 auto 36px;">
+    우리 몸을 올바르게 이해하고 건강하게 관리한다면,
+    더 건강하고 더 오래, 더 활기차게 살아갈 수 있습니다.
+    PRISM iO는 현재 상태를 측정하고, 건강한 행동 변화를 습관으로 만들도록 돕는 도구입니다.
+  </p>
+  <div style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap;">
+    <div style="width:8px; height:8px; border-radius:50%; background:var(--prism1);"></div>
+    <div style="width:8px; height:8px; border-radius:50%; background:var(--prism2);"></div>
+    <div style="width:8px; height:8px; border-radius:50%; background:var(--prism3);"></div>
+    <div style="width:8px; height:8px; border-radius:50%; background:var(--prism4);"></div>
+    <div style="width:8px; height:8px; border-radius:50%; background:var(--prism5);"></div>
+    <div style="width:8px; height:8px; border-radius:50%; background:var(--prism6);"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-logo">PRISM iO · Science Conference · 2025</div>
+  <p class="footer-copy">Nu Skin Enterprises · Pharmanex<br>본 뉴스레터는 컨퍼런스 발표 내용을 정리한 자료입니다.</p>
+</footer>
+
+</body>
+</html>
