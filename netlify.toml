@@ -1,0 +1,12 @@
+[[redirects]]
+  from = "/"
+  to = "/prism-conference.html"
+  status = 200
+
+[[redirects]]
+  from = "/prism"
+  to = "/prism-conference.html"
+  status = 200
+
+[build]
+  publish = "."
